@@ -16,7 +16,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 16  # Thay đổi phiên bản Node.js nếu cần
+          node-version: 22  # Thay đổi phiên bản Node.js nếu cần
 
       - name: Install dependencies
         run: npm install
@@ -29,5 +29,5 @@ jobs:
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}  # Sử dụng token từ GitHub Secrets
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}  # Thêm account ID nếu cần
-          projectName: portfolio  # Thay bằng tên dự án của bạn
+          projectName: neon-portfolio  # Thay bằng tên dự án của bạn
           directory: ./dist  # Thay đổi thư mục build nếu cần
