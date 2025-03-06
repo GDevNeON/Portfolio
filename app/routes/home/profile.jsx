@@ -25,8 +25,8 @@ const ProfileText = ({ visible, titleId }) => (
       prototype and validate experiences.
     </Text>
     <Text className={styles.description} data-visible={visible} size="l" as="p">
-      In my spare time I like to participate in outdoor sport events, play anime gacha games, and{' '}
-      <Link href="https://www.hackerrank.com/profile/neongaming4ever">practice coding on Hackerrank</Link>. I’m always down for hearing
+      In my spare time I like to participate in outdoor sport events, play anime gacha games, and practice coding on{' '}
+      <Link href="https://www.hackerrank.com/profile/neongaming4ever">Hackerrank</Link>. I’m always down for hearing
       about new game projects, so feel free to drop me a line.
     </Text>
   </Fragment>
