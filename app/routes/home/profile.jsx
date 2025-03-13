@@ -21,7 +21,7 @@ const ProfileText = ({ visible, titleId }) => (
       <DecoderText text="Hallo Everynyannnn!" start={visible} delay={500} />
     </Heading>
     <Text className={styles.description} data-visible={visible} size="l" as="p">
-      My name is Long, I'm a 3rd year student currently studying Software Engineer at Sai Gon University, HCMC. I'm a huge enthusiast in 3D video games. Beside that, I also include some of my side project for hobby such as mobile app, desktop app, and many more. Being comfortable with code allows me to rapidly
+      My name is Long, I'm a 3rd year student currently studying Software Engineer at Sai Gon University, HCMC. I'm a huge enthusiast in video games. Beside that, I also include some of my side project for hobby such as mobile, desktop apps. Being comfortable with code allows me to rapidly
       prototype and validate experiences.
     </Text>
     <Text className={styles.description} data-visible={visible} size="l" as="p">

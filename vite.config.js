@@ -13,9 +13,11 @@ import rehypePrism from '@mapbox/rehype-prism';
 
 export default defineConfig({
   assetsInclude: ['**/*.glb', '**/*.hdr', '**/*.glsl'],
-  base: '',
+  base: "/", // Đặt base URL đúng
   build: {
     assetsInlineLimit: 1024,
+    outDir: "build/client", // Đảm bảo Cloudflare lấy đúng thư mục build
+    manifest: true, // Giữ lại manifest để giúp trình duyệt load asset đúng
   },
   server: {
     port: 7777,
