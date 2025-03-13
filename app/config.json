@@ -4,14 +4,13 @@
   "disciplines": [
     "Unity Games",
     "Game Modder",
-    "Android App",
-    "Desktop App",
-    "React App"
+    "Android",
+    "Desktop"
   ],
-  "url": "https://hamishw.com",
+  "url": "https://neon-portfolio.pages.dev",
   "github": "GDevNeON",
   "facebook": "long.bui.793956",
   "discord": "@devneon",
-  "repo": "https://github.com/HamishMW/portfolio",
+  "repo": "https://github.com/GDevNeON/Portfolio",
   "ascii": "__  __  __\n\u005C \u005C \u005C \u005C \u005C\u2215\n \u005C \u005C\u2215\u005C \u005C\n  \u005C\u2215  \u005C\u2215\n"
 }

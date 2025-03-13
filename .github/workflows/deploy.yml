@@ -22,7 +22,7 @@ jobs:
         run: npm install
 
       - name: Build project
-        run: npm run deploy  # Thay đổi lệnh build nếu cần
+        run: npm run build  # Thay đổi lệnh build nếu cần
 
       - name: Deploy to Cloudflare Pages
         uses: cloudflare/pages-action@v1
@@ -30,4 +30,4 @@ jobs:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}  # Sử dụng token từ GitHub Secrets
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}  # Thêm account ID nếu cần
           projectName: neon-portfolio  # Thay bằng tên dự án của bạn
-          directory: ./dist  # Thay đổi thư mục build nếu cần
+          directory: ./build/client  # Thay đổi thư mục build nếu cần
