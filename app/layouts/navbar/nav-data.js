@@ -16,7 +16,7 @@ export const navLinks = [
   },
   {
     label: 'View CV',
-    pathname: 'https://drive.google.com/file/d/1wxGLBEHE5vIaPUcna2HqYvOXRietULtm/view?usp=drive_link',
+    pathname: 'https://drive.google.com/file/d/1AHzUYBngBFGWT_JAJ9c-GXHarfm-94xA/view?usp=sharing',
     external: true,
   },
 ];
