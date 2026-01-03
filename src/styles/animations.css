@@ -1,0 +1,415 @@
+/* Animation Styles */
+@keyframes borderFlow {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 100% 50%;
+  }
+}
+
+.glass {
+  background: var(--glass);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
+/* Background blobs */
+.bgBlobs {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* Background moving bands */
+.bandLayer {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.bgBorderPanel {
+  position: fixed;
+  width: 193vw;
+  height: 175vh;
+  border-radius: 90px;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.85;
+}
+
+.bgBorderPanel--topLeft {
+  left: -100vw;
+  top: -80vh;
+}
+
+.bgBorderPanel--topRight {
+  right: -100vw;
+  top: -80vh;
+}
+
+.bgBorderPanel--bottomRight {
+  right: -100vw;
+  bottom: -90vh;
+}
+
+.bgBorderPanel--bottomLeft {
+  left: -100vw;
+  bottom: -90vh;
+}
+
+@property --panel-spin {
+  syntax: '<angle>';
+  inherits: false;
+  initial-value: 0deg;
+}
+
+.bgBorderPanel::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 14px;
+  background: conic-gradient(
+    from var(--panel-spin),
+    transparent 0deg,
+    transparent 250deg,
+    var(--c-primary) 260deg,
+    var(--c-secondary) 280deg,
+    var(--c-accent) 300deg,
+    var(--c-highlight) 320deg,
+    transparent 330deg,
+    transparent 360deg
+  );
+  filter: blur(0.4px);
+  animation: panelBorderSpin var(--panel-duration, 3200ms) linear infinite;
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask-composite: exclude;
+}
+
+.bgBorderPanel::after {
+  content: '';
+  position: absolute;
+  inset: 14px;
+  border-radius: calc(90px - 14px);
+  background: transparent;
+  filter: blur(0.2px);
+}
+
+@keyframes panelBorderSpin {
+  0% {
+    --panel-spin: 0deg;
+  }
+  100% {
+    --panel-spin: 360deg;
+  }
+}
+
+.band {
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: var(--band-opacity, 0.75);
+  filter: drop-shadow(0 18px 42px rgba(0, 0, 0, 0.1));
+  mix-blend-mode: multiply;
+  will-change: transform;
+  offset-rotate: 0deg;
+  offset-anchor: 0% 50%;
+  offset-distance: 0%;
+  --bend: 0;
+  animation-duration: var(--band-duration, 6400ms);
+  animation-delay: var(--band-delay, 0ms);
+  animation-timing-function: cubic-bezier(0.2, 0.75, 0.15, 1);
+  animation-fill-mode: both;
+  animation-name: bandTravel;
+}
+
+.bandSeg {
+  width: var(--band-length, 900px);
+  height: var(--band-thickness, 28px);
+  border-radius: 999px;
+  filter: blur(0.2px);
+  background: linear-gradient(
+    90deg,
+    var(--c-primary) 0%,
+    var(--c-primary) 28%,
+    var(--c-secondary) 28%,
+    var(--c-secondary) 50%,
+    var(--c-accent) 50%,
+    var(--c-accent) 72%,
+    var(--c-highlight) 72%,
+    var(--c-highlight) 100%
+  );
+}
+
+.bandCorner {
+  position: absolute;
+  width: var(--band-thickness, 28px);
+  height: var(--band-thickness, 28px);
+  filter: blur(0.2px);
+  background: conic-gradient(
+    from 180deg,
+    var(--c-highlight) 0deg,
+    var(--c-highlight) 72deg,
+    var(--c-accent) 72deg,
+    var(--c-accent) 144deg,
+    var(--c-secondary) 144deg,
+    var(--c-secondary) 216deg,
+    var(--c-primary) 216deg,
+    var(--c-primary) 360deg
+  );
+  opacity: calc(var(--bend) * 1);
+  transform: scale(var(--bend));
+  transform-origin: 50% 50%;
+}
+
+.bandSeg--b {
+  position: absolute;
+  left: calc(var(--band-length, 900px) - (var(--band-thickness, 28px) / 2));
+  top: 0;
+  transform-origin: 0 50%;
+}
+
+@property --bend {
+  syntax: '<number>';
+  inherits: true;
+  initial-value: 0;
+}
+
+.band--h {
+  animation-name: bandTravel;
+}
+
+.band--v {
+  animation-name: bandTravel;
+}
+
+.band--v .bandSeg--a {
+  width: var(--band-length, 900px);
+  height: var(--band-thickness, 28px);
+}
+
+.band--hv {
+  animation-name: bandTravel, bandBend;
+  animation-timing-function: cubic-bezier(0.2, 0.75, 0.15, 1), ease-in-out;
+  animation-duration: var(--band-duration, 6400ms), var(--bend-window, 860ms);
+  animation-delay: var(--band-delay, 0ms), var(--bend-delay, 0ms);
+  animation-fill-mode: both, both;
+}
+
+.band--hv .bandSeg--a {
+  width: calc(
+    (var(--band-length, 900px) * (1 - var(--bend))) +
+      (var(--band-leg, 620px) * var(--bend))
+  );
+}
+
+.band--hv .bandCorner {
+  left: calc(var(--band-leg, 620px) - (var(--band-thickness, 28px) / 2));
+  top: 0;
+  border-top-right-radius: 999px;
+}
+
+.band--hv .bandSeg--b {
+  position: absolute;
+  left: calc(var(--band-leg, 620px) - (var(--band-thickness, 28px) / 2));
+  top: calc(var(--band-thickness, 28px) / 2);
+  width: var(--band-thickness, 28px);
+  height: calc(var(--band-length, 900px) - var(--band-leg, 620px));
+  border-radius: 999px;
+  background: linear-gradient(
+    180deg,
+    var(--c-primary) 0%,
+    var(--c-primary) 28%,
+    var(--c-secondary) 28%,
+    var(--c-secondary) 50%,
+    var(--c-accent) 50%,
+    var(--c-accent) 72%,
+    var(--c-highlight) 72%,
+    var(--c-highlight) 100%
+  );
+  opacity: calc(var(--bend) * 1);
+  transform: scaleY(var(--bend));
+  transform-origin: 50% 0%;
+}
+
+.band--vh {
+  animation-name: bandTravel, bandBend;
+  animation-timing-function: cubic-bezier(0.2, 0.75, 0.15, 1), ease-in-out;
+  animation-duration: var(--band-duration, 6400ms), var(--bend-window, 860ms);
+  animation-delay: var(--band-delay, 0ms), var(--bend-delay, 0ms);
+  animation-fill-mode: both, both;
+}
+
+.band--vh .bandSeg--a {
+  transform: rotate(90deg);
+  transform-origin: 0 50%;
+  width: calc(
+    (var(--band-length, 900px) * (1 - var(--bend))) +
+      (var(--band-leg, 620px) * var(--bend))
+  );
+}
+
+.band--vh .bandCorner {
+  left: 0;
+  top: calc(var(--band-leg, 620px) - (var(--band-thickness, 28px) / 2));
+  border-bottom-left-radius: 999px;
+}
+
+.band--vh .bandSeg--b {
+  position: absolute;
+  left: calc(var(--band-thickness, 28px) / 2);
+  top: calc(var(--band-leg, 620px) - (var(--band-thickness, 28px) / 2));
+  width: calc(var(--band-length, 900px) - var(--band-leg, 620px));
+  height: var(--band-thickness, 28px);
+  border-radius: 999px;
+  opacity: calc(var(--bend) * 1);
+  transform: scaleX(var(--bend));
+  transform-origin: 0% 50%;
+}
+
+@keyframes bandTravel {
+  0% {
+    offset-distance: 0%;
+    opacity: var(--band-opacity, 0.75);
+  }
+  100% {
+    offset-distance: 100%;
+    opacity: var(--band-opacity, 0.75);
+  }
+}
+
+@keyframes bandBend {
+  0% {
+    --bend: 0;
+  }
+  50% {
+    --bend: 1;
+  }
+  100% {
+    --bend: 0;
+  }
+}
+
+.band--assemble {
+  animation-name: bandAssemble;
+  offset-anchor: 50% 50%;
+}
+
+.band--assemble.band--hv,
+.band--assemble.band--vh {
+  animation-name: bandAssemble, bandBend;
+  animation-timing-function: cubic-bezier(0.2, 0.75, 0.15, 1), ease-in-out;
+  animation-duration: var(--band-duration, 6400ms), var(--bend-window, 860ms);
+  animation-delay: var(--band-delay, 0ms), var(--bend-delay, 0ms);
+  animation-fill-mode: both, both;
+}
+
+@keyframes bandAssemble {
+  0% {
+    offset-distance: 0%;
+    opacity: var(--band-opacity, 0.75);
+  }
+  78% {
+    offset-distance: 100%;
+    opacity: var(--band-opacity, 0.75);
+  }
+  100% {
+    offset-distance: 100%;
+    opacity: 0;
+  }
+}
+
+.blob {
+  position: absolute;
+  filter: blur(42px);
+  opacity: 0.65;
+  border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
+  animation: floaty 7s ease-in-out infinite;
+}
+
+.blob--a {
+  width: 460px;
+  height: 460px;
+  top: 70px;
+  right: -120px;
+  background: rgba(201, 238, 255, 0.75);
+}
+
+.blob--b {
+  width: 360px;
+  height: 360px;
+  bottom: 110px;
+  left: -90px;
+  background: rgba(239, 205, 105, 0.65);
+  animation-delay: 1.4s;
+}
+
+.blob--c {
+  width: 320px;
+  height: 320px;
+  top: 45%;
+  left: 22%;
+  background: rgba(230, 130, 145, 0.55);
+  animation-delay: 2.8s;
+}
+
+@keyframes floaty {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) rotate(0deg);
+  }
+  50% {
+    transform: translate3d(0, -18px, 0) rotate(6deg);
+  }
+}
+
+/* Edge running bands (the moving "worm") */
+.edgeFrame {
+  position: fixed;
+  inset: 16px;
+  z-index: 20;
+  pointer-events: none;
+  border-radius: 24px;
+}
+
+.edgeFrame::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: 26px;
+  background: rgba(0, 0, 0, 0.04);
+}
+
+.edgeRunner {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 240px;
+  height: 14px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--c-primary), var(--c-secondary), var(--c-accent), var(--c-highlight));
+  box-shadow: 0 0 18px rgba(239, 205, 105, 0.45);
+}
+
+/* Gradient border utility */
+.colorBorder {
+  --cb-radius: 20px;
+  padding: 2px;
+  border-radius: var(--cb-radius);
+  background: linear-gradient(90deg, var(--c-primary), var(--c-secondary), var(--c-accent), var(--c-highlight));
+  background-size: 280% 280%;
+  animation: borderFlow 4.4s linear infinite;
+}
+
+.colorBorderInner {
+  border-radius: calc(var(--cb-radius) - 2px);
+  background: rgba(255, 255, 255, 0.66);
+}

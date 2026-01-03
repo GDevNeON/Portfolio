@@ -1,0 +1,32 @@
+/* CSS Variables */
+:root {
+  --c-primary: #c9eeff;
+  --c-secondary: #efcd69;
+  --c-accent: #e68291;
+  --c-highlight: #9ab155;
+
+  --c-ink: #121212;
+  --c-paper: #ffffff;
+  --c-muted: rgba(0, 0, 0, 0.6);
+
+  --glass: rgba(255, 255, 255, 0.22);
+  --glass-border: rgba(255, 255, 255, 0.32);
+  --shadow: 0 24px 70px rgba(0, 0, 0, 0.18);
+
+  font-family: Outfit, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+}
+
+.dark {
+  --c-ink: #f9fafb;
+  --c-paper: #050509;
+  --c-muted: rgba(249, 250, 251, 0.7);
+
+  --glass: rgba(15, 15, 20, 0.9);
+  --glass-border: rgba(148, 163, 184, 0.4);
+  --shadow: 0 24px 70px rgba(0, 0, 0, 0.6);
+}

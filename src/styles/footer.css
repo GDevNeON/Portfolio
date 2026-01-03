@@ -1,0 +1,77 @@
+/* Footer Styles */
+.footer {
+  position: relative;
+  z-index: 1;
+  background: rgba(0, 0, 0, 0.9);
+  color: rgba(255, 255, 255, 0.85);
+  padding: 40px 24px;
+  overflow: hidden;
+}
+
+.footerLine {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 8px;
+  background: linear-gradient(90deg, var(--c-primary), var(--c-secondary), var(--c-accent));
+}
+
+.footerBlob {
+  position: absolute;
+  right: -80px;
+  bottom: -80px;
+  width: 256px;
+  height: 256px;
+  background: var(--c-accent);
+  opacity: 0.2;
+  border-radius: 50%;
+  filter: blur(96px);
+}
+
+.footerContent {
+  max-width: 1280px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.footerTitle {
+  font-weight: 900;
+  font-size: 32px;
+  margin-bottom: 24px;
+  letter-spacing: -0.02em;
+}
+
+.footerSocial {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  margin-bottom: 24px;
+}
+
+.footerSocialLink {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.footerSocialLink:hover {
+  background: var(--c-primary);
+  color: var(--c-ink);
+}
+
+.footerSocialText {
+  font-weight: 700;
+  font-size: 20px;
+}
+
+.footerCopyright {
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 14px;
+}

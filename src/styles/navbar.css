@@ -1,0 +1,225 @@
+/* Navbar Styles */
+.appRoot {
+  position: relative;
+  min-height: 100vh;
+}
+
+.appMain {
+  position: relative;
+  z-index: 1;
+  padding-top: 92px;
+}
+
+.navBar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 40;
+  padding: 16px 24px;
+  transition: all 0.3s ease;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.dark .navBar {
+  background: rgba(7, 9, 13, 0.9);
+  border: 1px solid rgba(148, 163, 184, 0.35);
+}
+
+.navInner {
+  margin: 0 auto;
+  max-width: 1280px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.brand {
+  font-weight: 900;
+  font-size: 24px;
+  letter-spacing: -0.02em;
+  color: var(--c-ink);
+  transition: color 0.3s ease;
+}
+
+.dark .brand {
+  color: var(--c-primary);
+}
+
+.navLinks {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  position: relative;
+}
+
+.navLink {
+  background: transparent;
+  border: 0;
+  padding: 8px 0;
+  cursor: pointer;
+  color: var(--c-ink);
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.navLink:hover {
+  color: var(--c-accent);
+}
+
+.mobileMenuToggle {
+  display: none;
+  background: transparent;
+  border: 0;
+  padding: 8px;
+  cursor: pointer;
+  color: var(--c-ink);
+  border-radius: 50%;
+  transition: all 0.3s ease;
+}
+
+.mobileMenuToggle:hover {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+.dark .mobileMenuToggle:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.mobileMenu {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .navLinks .navLink:not(.themeToggle):not(.mobileMenuToggle) {
+    display: none;
+  }
+  
+  .mobileMenuToggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .mobileMenu {
+    display: flex;
+    position: fixed;
+    top: 72px;
+    left: 0;
+    right: 0;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    padding: 16px 24px;
+    flex-direction: column;
+    gap: 12px;
+    z-index: 30;
+    transform: translateY(-100%);
+    opacity: 0;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    pointer-events: none;
+  }
+
+  .mobileMenu.show {
+    transform: translateY(0);
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .dark .mobileMenu {
+    background: rgba(7, 9, 13, 0.95);
+    border-bottom: 1px solid rgba(148, 163, 184, 0.3);
+  }
+
+  .mobileNavLink {
+    background: transparent;
+    border: 0;
+    padding: 12px 0;
+    text-align: left;
+    font-weight: 500;
+    color: var(--c-ink);
+    cursor: pointer;
+    transition: color 0.3s ease;
+  }
+
+  .mobileNavLink:hover {
+    color: var(--c-accent);
+  }
+
+  .dark .mobileNavLink {
+    color: rgba(255, 255, 255, 0.9);
+  }
+
+  .dark .mobileNavLink:hover {
+    color: var(--c-primary);
+  }
+}
+
+.themeToggle {
+  background: transparent;
+  border: 0;
+  padding: 8px;
+  border-radius: 50%;
+  cursor: pointer;
+  color: rgba(0, 0, 0, 0.6);
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.themeToggle:hover {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+.dark .themeToggle {
+  color: #fbbf24;
+}
+
+.dark .themeToggle:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.navbarIcons {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: 12px;
+}
+
+.navIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+  border-radius: 12px;
+  color: rgba(0, 0, 0, 0.6);
+  transition: all 160ms ease;
+  text-decoration: none;
+}
+
+.navIcon:hover {
+  background: rgba(0, 0, 0, 0.04);
+  transform: translateY(-1px);
+  color: var(--c-accent);
+}
+
+.dark .navIcon {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.dark .navIcon:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.navCta {
+  padding: 10px 14px;
+  border-radius: 14px;
+  font-weight: 800;
+  background: rgba(0, 0, 0, 0.88);
+  color: #fff;
+}

@@ -1,0 +1,234 @@
+/* Contact Section Styles */
+.contact {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.contactHeader {
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.contactTitle {
+  margin: 0 0 16px;
+  font-size: 48px;
+  letter-spacing: -0.03em;
+}
+
+.contactSubtitle {
+  margin: 0;
+  font-size: 18px;
+  color: var(--c-muted);
+  line-height: 1.6;
+}
+
+.dark .contactSubtitle {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.contactGrid {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.contactCard {
+  width: 100%;
+  padding: 40px;
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.08);
+}
+
+.dark .contactCard {
+  background: rgba(20, 22, 28, 0.8);
+  border: 1px solid rgba(148, 163, 184, 0.3);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4);
+}
+
+.field {
+  margin-bottom: 32px;
+}
+
+.field:last-child {
+  margin-bottom: 0;
+}
+
+.label {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--c-muted);
+  margin-bottom: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.dark .label {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.panelInputBorder {
+  position: relative;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.5);
+  border: 2px solid transparent;
+  transition: all 0.3s ease;
+  overflow: hidden;
+  pointer-events: auto !important;
+}
+
+.panelInputBorder::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 4px;
+  background: conic-gradient(
+    from var(--panel-spin, 0deg),
+    transparent 0deg,
+    transparent 250deg,
+    var(--c-primary) 260deg,
+    var(--c-secondary) 280deg,
+    var(--c-accent) 300deg,
+    var(--c-highlight) 320deg,
+    transparent 330deg,
+    transparent 360deg
+  );
+  filter: blur(0.4px);
+  animation: panelBorderSpin var(--panel-duration, 3200ms) linear infinite;
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none !important;
+}
+
+.panelInputBorder:focus-within::before {
+  opacity: 1;
+  pointer-events: none !important;
+}
+
+.dark .panelInputBorder {
+  background: rgba(15, 15, 20, 0.6);
+}
+
+.panelInput {
+  width: 100%;
+  padding: 16px 20px;
+  border: none;
+  background: transparent;
+  color: var(--c-ink);
+  font-size: 16px;
+  font-family: inherit;
+  outline: none;
+  pointer-events: auto !important;
+  user-select: text !important;
+  -webkit-user-select: text !important;
+  -moz-user-select: text !important;
+  -ms-user-select: text !important;
+}
+
+.dark .panelInput {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.panelInput::placeholder {
+  color: var(--c-muted);
+  opacity: 0.6;
+}
+
+.dark .panelInput::placeholder {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.panelInput--area {
+  resize: vertical;
+  min-height: 120px;
+  font-family: inherit;
+  line-height: 1.5;
+}
+
+.contactActions {
+  display: flex;
+  gap: 16px;
+  margin-top: 40px;
+  flex-wrap: wrap;
+}
+
+.contactAside {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.asideCard {
+  padding: 32px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.6);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.06);
+}
+
+.dark .asideCard {
+  background: rgba(20, 22, 28, 0.6);
+  border: 1px solid rgba(148, 163, 184, 0.3);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+}
+
+.asideTitle {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--c-accent);
+  margin-bottom: 12px;
+}
+
+.asideBody {
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--c-muted);
+  margin-bottom: 20px;
+}
+
+.dark .asideBody {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.asidePills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+@media (max-width: 968px) {
+  .contactGrid {
+    max-width: 100%;
+    padding: 0 20px;
+  }
+
+  .contactCard {
+    padding: 32px 24px;
+  }
+
+  .contactActions {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 640px) {
+  .contactTitle {
+    font-size: 36px;
+  }
+
+  .contactCard {
+    padding: 24px 20px;
+  }
+
+  .contactActions {
+    flex-direction: column;
+  }
+}
