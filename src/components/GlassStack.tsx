@@ -20,20 +20,37 @@ export default function GlassStack({ images, className, alt }: GlassStackProps) 
     const el = sceneRef.current
     if (!el) return
 
-    const onMove = (e: PointerEvent) => {
+    let frameId: number | null = null
+    let lastEvent: PointerEvent | null = null
+
+    const updateTilt = () => {
+      if (!lastEvent) return
       const rect = el.getBoundingClientRect()
-      const px = (e.clientX - rect.left) / rect.width
-      const py = (e.clientY - rect.top) / rect.height
+      const px = (lastEvent.clientX - rect.left) / rect.width
+      const py = (lastEvent.clientY - rect.top) / rect.height
       const x = (px - 0.5) * 2
       const y = (py - 0.5) * 2
 
       el.style.setProperty('--gs-ry', `${x * 10}deg`)
       el.style.setProperty('--gs-rx', `${-y * 8}deg`)
+      frameId = null
+    }
+
+    const onMove = (e: PointerEvent) => {
+      lastEvent = e
+      if (frameId == null) {
+        frameId = window.requestAnimationFrame(updateTilt)
+      }
     }
 
     const onLeave = () => {
       el.style.setProperty('--gs-ry', `0deg`)
       el.style.setProperty('--gs-rx', `0deg`)
+      lastEvent = null
+      if (frameId != null) {
+        window.cancelAnimationFrame(frameId)
+        frameId = null
+      }
     }
 
     el.addEventListener('pointermove', onMove)
@@ -42,6 +59,9 @@ export default function GlassStack({ images, className, alt }: GlassStackProps) 
     return () => {
       el.removeEventListener('pointermove', onMove)
       el.removeEventListener('pointerleave', onLeave)
+      if (frameId != null) {
+        window.cancelAnimationFrame(frameId)
+      }
     }
   }, [])
 

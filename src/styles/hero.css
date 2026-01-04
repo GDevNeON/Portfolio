@@ -199,6 +199,25 @@
   transform: translateX(-20px) translateY(-15px) scale(1.12) rotate(5deg);
 }
 
+.heroCard--d {
+  right: 180px;
+  top: 120px;
+  width: 140px;
+  height: 140px;
+  background: var(--c-ink);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--c-paper);
+  font-size: 48px;
+  font-weight: 900;
+}
+
+.heroCard--d:hover {
+  transform: scale(1.08);
+}
+
 .heroBadge {
   position: absolute;
   left: 26px;
@@ -264,5 +283,86 @@
   }
   100% {
     box-shadow: 0 0 0 0 rgba(154, 177, 85, 0);
+  }
+}
+
+@media (max-width: 768px) {
+  .page {
+    padding: 0 16px 72px;
+  }
+
+  .section {
+    padding: 64px 0;
+  }
+
+  .hero {
+    padding-top: 32px;
+  }
+
+  .heroGrid {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+
+  .heroTitle {
+    font-size: 46px;
+    line-height: 1.02;
+  }
+
+  .heroText {
+    font-size: 16px;
+  }
+
+  .heroRight {
+    height: 380px;
+    max-width: 360px;
+    margin: 0 auto;
+  }
+
+  .heroCard--a {
+    right: 18px;
+    top: 12px;
+    width: 220px;
+    height: 300px;
+    border-top-right-radius: 90px;
+  }
+
+  .heroCard--b {
+    right: 48px;
+    bottom: 32px;
+    width: 190px;
+    height: 190px;
+  }
+
+  .heroCard--c {
+    right: 250px;
+    top: 250px;
+    width: 120px;
+    height: 280px;
+  }
+
+  .heroCard--d {
+    right: 180px;
+    top: 120px;
+    width: 140px;
+    height: 140px;
+    font-size: 36px;
+  }
+
+  .heroBadge {
+    left: 18px;
+    bottom: 20px;
+    width: 220px;
+    padding: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .heroTitle {
+    font-size: 38px;
+  }
+
+  .heroRight {
+    height: 340px;
   }
 }

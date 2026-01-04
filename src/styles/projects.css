@@ -349,3 +349,54 @@
 .glassStackV[data-flip='true'] .glassPaneV.isActive {
   transform: translate3d(-26px, -14px, 120px) rotateY(3deg);
 }
+
+@media (max-width: 900px) {
+  .stackGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .project {
+    grid-template-columns: 1fr;
+    gap: 22px;
+  }
+
+  .project--reverse {
+    grid-template-columns: 1fr;
+  }
+
+  .projectMedia {
+    order: 2;
+  }
+
+  .projectInfo {
+    order: 1;
+  }
+
+  .projectShowcase {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .projectGlass {
+    margin-top: 8px;
+  }
+}
+
+@media (max-width: 640px) {
+  .stackGrid {
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  .projectTitle {
+    font-size: 24px;
+  }
+
+  .projectDesc {
+    font-size: 14px;
+  }
+
+  .glassStackV {
+    width: min(320px, 100%);
+  }
+}
