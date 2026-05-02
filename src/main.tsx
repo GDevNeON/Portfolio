@@ -15,11 +15,13 @@ import './styles/devices.css'
 import App from './App.tsx'
 import { ThemeProvider } from './contexts/ThemeContext'
 import ErrorBoundary from './components/ErrorBoundary'
+import MetaTags from './components/MetaTags'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <ThemeProvider>
       <ErrorBoundary>
+        <MetaTags />
         <App />
       </ErrorBoundary>
     </ThemeProvider>

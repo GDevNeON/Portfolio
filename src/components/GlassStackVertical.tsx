@@ -23,6 +23,11 @@ export default function GlassStackVertical({
   }, [images])
 
   const [order, setOrder] = useState([0, 1, 2])
+  const [loadedImages, setLoadedImages] = useState<Set<number>>(new Set())
+
+  const handleImageLoad = (index: number) => {
+    setLoadedImages(prev => new Set(prev).add(index))
+  }
 
   const rootClassName = [
     'glassStackV',
@@ -59,7 +64,18 @@ export default function GlassStackVertical({
             aria-label={`Focus layer ${paneIndex + 1}`}
           >
             {src ? (
-              <img src={src} alt={alt ?? ''} draggable={false} />
+              <>
+                {!loadedImages.has(paneIndex) && <div className="skeleton" style={{ width: '100%', height: '150px' }} />}
+                <img
+                  src={src}
+                  alt={alt ?? ''}
+                  draggable={false}
+                  loading={isActive ? 'eager' : 'lazy'}
+                  onLoad={() => handleImageLoad(paneIndex)}
+                  className={`lazy-image ${loadedImages.has(paneIndex) ? 'fade-in' : ''}`}
+                  style={{ display: loadedImages.has(paneIndex) ? 'block' : 'none' }}
+                />
+              </>
             ) : (
               <div className="glassFallbackV" />
             )}

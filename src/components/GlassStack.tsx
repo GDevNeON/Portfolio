@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 
 type GlassStackProps = {
   images: string[]
@@ -8,10 +8,15 @@ type GlassStackProps = {
 
 export default function GlassStack({ images, className, alt }: GlassStackProps) {
   const sceneRef = useRef<HTMLDivElement | null>(null)
+  const [loadedImages, setLoadedImages] = useState<Record<number, boolean>>({})
 
-  const imageSrc = useMemo(() => {
-    return images.find(Boolean) ?? ''
+  const validImages = useMemo(() => {
+    return images.filter(Boolean).slice(0, 3)
   }, [images])
+
+  const handleImageLoad = (index: number) => {
+    setLoadedImages(prev => ({ ...prev, [index]: true }))
+  }
 
   useEffect(() => {
     const el = sceneRef.current
@@ -63,10 +68,31 @@ export default function GlassStack({ images, className, alt }: GlassStackProps) 
   }, [])
 
   return (
-    <div className={['glassStack', className].filter(Boolean).join(' ')} ref={sceneRef}>
-      <button type="button" className="glassPane glassPane--single" aria-label={alt ?? ''}>
-        {imageSrc ? <img src={imageSrc} alt={alt ?? ''} draggable={false} /> : <div className="glassFallback" />}
-      </button>
+    <div className={['glassStackV', className].filter(Boolean).join(' ')} ref={sceneRef}>
+      {validImages.map((src, index) => (
+        <button
+          key={index}
+          type="button"
+          className={`glassPaneV glassPaneV--${index}`}
+          aria-label={alt ?? ''}
+        >
+          {!loadedImages[index] && <div className="skeleton" style={{ width: '100%', height: '100%' }} />}
+          <img
+            src={src}
+            alt={alt ?? ''}
+            draggable={false}
+            loading="eager"
+            onLoad={() => handleImageLoad(index)}
+            className={`lazy-image ${loadedImages[index] ? 'fade-in' : ''}`}
+            style={{ display: loadedImages[index] ? 'block' : 'none' }}
+          />
+        </button>
+      ))}
+      {validImages.length === 0 && (
+        <div className="glassPaneV glassPaneV--0">
+          <div className="glassFallbackV" />
+        </div>
+      )}
     </div>
   )
 }
