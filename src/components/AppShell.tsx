@@ -55,39 +55,6 @@ export default function AppShell() {
     }
   }, [location.pathname])
 
-  useEffect(() => {
-    const update = () => {
-      const els = Array.from(document.querySelectorAll<HTMLElement>('.supportFrame'))
-      if (els.length === 0) return
-
-      const cx = window.innerWidth / 2
-      const cy = window.innerHeight / 2
-
-      let best = els[0]
-      let bestD = Number.POSITIVE_INFINITY
-      for (const el of els) {
-        const r = el.getBoundingClientRect()
-        const x = r.left + r.width / 2
-        const y = r.top + r.height / 2
-        const d = (x - cx) * (x - cx) + (y - cy) * (y - cy)
-        if (d < bestD) {
-          bestD = d
-          best = el
-        }
-      }
-      console.log('Closest element:', best)
-    }
-
-    update()
-    const onResize = () => update()
-    window.addEventListener('resize', onResize)
-    const t = window.setInterval(update, 350)
-    return () => {
-      window.removeEventListener('resize', onResize)
-      window.clearInterval(t)
-    }
-  }, [activeSectionId])
-
   const scrollToSection = (id: string) => {
     if (location.pathname !== '/') {
       navigate('/')
