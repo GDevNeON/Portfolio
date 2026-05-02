@@ -25,6 +25,9 @@ export default function Snackbar({ message, type, onClose }: SnackbarProps) {
   return (
     <div
       className={`snackbar snackbar--${type} ${isVisible ? 'snackbar--visible' : ''}`}
+      role="status"
+      aria-live="polite"
+      aria-atomic="true"
     >
       <div className="snackbarContent">
         <span className="snackbarMessage">{message}</span>

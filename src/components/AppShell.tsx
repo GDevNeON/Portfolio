@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Outlet, useLocation, useNavigate } from 'react-router-dom'
 import { siteConfig } from '../siteConfig'
 import ThemeToggle from './ThemeToggle'
@@ -9,7 +9,11 @@ export default function AppShell() {
   const navigate = useNavigate()
   const [activeSectionId, setActiveSectionId] = useState('home')
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const mobileMenuRef = useRef<HTMLDivElement>(null)
+  const mobileMenuToggleRef = useRef<HTMLButtonElement>(null)
+  const previousFocusRef = useRef<HTMLElement | null>(null)
 
+  // IntersectionObserver with mobile-responsive thresholds
   useEffect(() => {
     const nodes = Array.from(
       document.querySelectorAll<HTMLElement>('[data-scroll-section]'),
@@ -20,6 +24,8 @@ export default function AppShell() {
       return
     }
 
+    const isMobile = window.matchMedia('(max-width: 768px)').matches
+
     const activeIo = new IntersectionObserver(
       (ioEntries) => {
         const candidates = ioEntries
@@ -29,7 +35,11 @@ export default function AppShell() {
         const best = candidates[0]?.target as HTMLElement | undefined
         if (best?.id) setActiveSectionId(best.id)
       },
-      { root: null, threshold: [0.15, 0.25, 0.35, 0.5], rootMargin: '-35% 0px -50% 0px' },
+      {
+        root: null,
+        threshold: [0.15, 0.25, 0.35, 0.5],
+        rootMargin: isMobile ? '-20% 0px -30% 0px' : '-35% 0px -50% 0px',
+      },
     )
 
     const revealIo = new IntersectionObserver(
@@ -41,7 +51,11 @@ export default function AppShell() {
           observer.unobserve(el)
         }
       },
-      { root: null, threshold: 0.12, rootMargin: '0px 0px -10% 0px' },
+      {
+        root: null,
+        threshold: 0.12,
+        rootMargin: isMobile ? '0px 0px -5% 0px' : '0px 0px -10% 0px',
+      },
     )
 
     for (const n of nodes) {
@@ -54,6 +68,57 @@ export default function AppShell() {
       revealIo.disconnect()
     }
   }, [location.pathname])
+
+  // Focus trap for mobile menu
+  useEffect(() => {
+    if (!mobileMenuOpen) {
+      // Return focus to toggle button when menu closes
+      if (previousFocusRef.current) {
+        previousFocusRef.current.focus()
+        previousFocusRef.current = null
+      }
+      return
+    }
+
+    // Store previously focused element
+    previousFocusRef.current = document.activeElement as HTMLElement
+
+    const menu = mobileMenuRef.current
+    if (!menu) return
+
+    const focusableElements = menu.querySelectorAll<HTMLElement>(
+      'button, a, input, textarea, select, [tabindex]:not([tabindex="-1"])'
+    )
+    const firstElement = focusableElements[0]
+    const lastElement = focusableElements[focusableElements.length - 1]
+
+    // Focus first element when menu opens
+    firstElement?.focus()
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setMobileMenuOpen(false)
+        return
+      }
+
+      if (e.key !== 'Tab') return
+
+      if (e.shiftKey) {
+        if (document.activeElement === firstElement) {
+          e.preventDefault()
+          lastElement?.focus()
+        }
+      } else {
+        if (document.activeElement === lastElement) {
+          e.preventDefault()
+          firstElement?.focus()
+        }
+      }
+    }
+
+    document.addEventListener('keydown', handleKeyDown)
+    return () => document.removeEventListener('keydown', handleKeyDown)
+  }, [mobileMenuOpen])
 
   const scrollToSection = (id: string) => {
     if (location.pathname !== '/') {
@@ -69,6 +134,9 @@ export default function AppShell() {
 
   return (
     <div className="appRoot" data-active-section={activeSectionId}>
+      <a href="#main-content" className="skipLink">
+        Skip to main content
+      </a>
       <BackgroundPanelCycler />
 
       <div className="bgBlobs" aria-hidden="true">
@@ -115,10 +183,13 @@ export default function AppShell() {
 
             <ThemeToggle />
             
-            <button 
+            <button
+              ref={mobileMenuToggleRef}
               className="mobileMenuToggle"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              aria-label={siteConfig.ui.common.closeNotification}
+              aria-label="Toggle navigation menu"
+              aria-expanded={mobileMenuOpen}
+              aria-controls="mobile-menu"
             >
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <line x1="3" y1="6" x2="21" y2="6"></line>
@@ -131,7 +202,11 @@ export default function AppShell() {
       </header>
 
       {/* Mobile Menu Dropdown */}
-      <div className={`mobileMenu ${mobileMenuOpen ? 'show' : ''}`}>
+      <div
+        id="mobile-menu"
+        ref={mobileMenuRef}
+        className={`mobileMenu ${mobileMenuOpen ? 'show' : ''}`}
+      >
           <button type="button" className="mobileNavLink" onClick={() => { scrollToSection('home'); setMobileMenuOpen(false); }}>
             {siteConfig.ui.navigation.home}
           </button>
@@ -149,7 +224,7 @@ export default function AppShell() {
           </button>
         </div>
 
-      <main className="appMain">
+      <main id="main-content" className="appMain">
         <Outlet />
       </main>
 

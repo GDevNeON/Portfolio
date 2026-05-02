@@ -7,6 +7,7 @@ export default function NavbarIcons() {
         rel="noopener noreferrer"
         className="navIcon"
         title="GitHub"
+        aria-label="GitHub profile"
       >
         <svg
           width="20"
@@ -23,6 +24,7 @@ export default function NavbarIcons() {
         rel="noopener noreferrer"
         className="navIcon"
         title="LinkedIn"
+        aria-label="LinkedIn profile"
       >
         <svg
           width="20"
@@ -37,6 +39,7 @@ export default function NavbarIcons() {
         href="mailto:contact@example.com"
         className="navIcon"
         title="Email"
+        aria-label="Send email"
       >
         <svg
           width="20"

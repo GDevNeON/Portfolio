@@ -9,6 +9,8 @@ export default function Contact() {
   const [message, setMessage] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [snackbar, setSnackbar] = useState<{ message: string; type: 'success' | 'error' } | null>(null)
+  const [emailError, setEmailError] = useState('')
+  const [messageError, setMessageError] = useState('')
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' })
@@ -22,14 +24,23 @@ export default function Contact() {
   const RATE_LIMIT_WINDOW_MS = 10 * 60 * 1000 // 10 phút
 
   async function handleSend() {
+    // Reset errors
+    setEmailError('')
+    setMessageError('')
+
     if (!email || !message) {
-      setSnackbar({ message: siteConfig.ui.contact.validation.required, type: 'error' })
+      const errorMsg = siteConfig.ui.contact.validation.required
+      if (!email) setEmailError(errorMsg)
+      if (!message) setMessageError(errorMsg)
+      setSnackbar({ message: errorMsg, type: 'error' })
       return
     }
 
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
     if (!emailPattern.test(email)) {
-      setSnackbar({ message: siteConfig.ui.contact.validation.invalidEmail, type: 'error' })
+      const errorMsg = siteConfig.ui.contact.validation.invalidEmail
+      setEmailError(errorMsg)
+      setSnackbar({ message: errorMsg, type: 'error' })
       return
     }
 
@@ -102,29 +113,45 @@ export default function Contact() {
         <div className="contactGrid">
           <div className="contactCard glass">
             <div className="field">
-              <div className="label">{siteConfig.ui.contact.yourEmail}</div>
+              <label htmlFor="email" className="label">{siteConfig.ui.contact.yourEmail}</label>
               <div className="panelInputBorder">
                 <input
+                  id="email"
                   className="panelInput"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder={siteConfig.ui.contact.emailPlaceholder}
                   inputMode="email"
+                  aria-invalid={!!emailError}
+                  aria-describedby={emailError ? 'email-error' : undefined}
                 />
               </div>
+              {emailError && (
+                <span id="email-error" className="fieldError" role="alert">
+                  {emailError}
+                </span>
+              )}
             </div>
 
             <div className="field">
-              <div className="label">{siteConfig.ui.contact.message}</div>
+              <label htmlFor="message" className="label">{siteConfig.ui.contact.message}</label>
               <div className="panelInputBorder">
                 <textarea
+                  id="message"
                   className="panelInput panelInput--area"
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
                   placeholder={siteConfig.ui.contact.messagePlaceholder}
                   rows={6}
+                  aria-invalid={!!messageError}
+                  aria-describedby={messageError ? 'message-error' : undefined}
                 />
               </div>
+              {messageError && (
+                <span id="message-error" className="fieldError" role="alert">
+                  {messageError}
+                </span>
+              )}
             </div>
 
             <div className="contactActions">
@@ -133,7 +160,9 @@ export default function Contact() {
                 className="btnPrimary"
                 onClick={handleSend}
                 disabled={isSubmitting}
+                aria-busy={isSubmitting}
               >
+                {isSubmitting && <span className="spinner" aria-hidden="true" />}
                 {isSubmitting ? siteConfig.ui.contact.sending : siteConfig.ui.contact.sendMessage}
               </button>
               <Link className="btnGhost" to="/">

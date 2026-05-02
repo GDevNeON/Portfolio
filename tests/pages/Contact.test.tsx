@@ -46,7 +46,7 @@ describe('Contact Page', () => {
     screen.getByRole('button', { name: /Send message/i }).click()
     
     await waitFor(() => {
-      expect(screen.getByText(/Please check your email and contents/i)).toBeInTheDocument()
+      expect(screen.getByRole('status')).toHaveTextContent(/Please check your email and contents/i)
     })
   })
 
@@ -59,7 +59,7 @@ describe('Contact Page', () => {
     screen.getByRole('button', { name: /Send message/i }).click()
     
     await waitFor(() => {
-      expect(screen.getByText(/Please check your email and contents/i)).toBeInTheDocument()
+      expect(screen.getByRole('status')).toHaveTextContent(/Please check your email and contents/i)
     })
   })
 
@@ -75,7 +75,7 @@ describe('Contact Page', () => {
     screen.getByRole('button', { name: /Send message/i }).click()
     
     await waitFor(() => {
-      expect(screen.getByText(/Invalid Email, please check your input/i)).toBeInTheDocument()
+      expect(screen.getByRole('status')).toHaveTextContent(/Invalid Email, please check your input and try again/i)
     })
   })
 
@@ -93,7 +93,7 @@ describe('Contact Page', () => {
     screen.getByRole('button', { name: /Send message/i }).click()
     
     await waitFor(() => {
-      expect(screen.getByText(/Missing EmailJS configuration/i)).toBeInTheDocument()
+      expect(screen.getByRole('status')).toHaveTextContent(/Missing EmailJS configuration/i)
     })
   })
 
@@ -138,7 +138,7 @@ describe('Contact Page', () => {
     screen.getByRole('button', { name: /Send message/i }).click()
     
     await waitFor(() => {
-      expect(screen.getByText(/quá 3 tin nhắn/i)).toBeInTheDocument()
+      expect(screen.getByRole('status')).toHaveTextContent(/quá 3 tin nhắn/i)
     })
     
     // EmailJS should not have been called
@@ -157,7 +157,7 @@ describe('Contact Page', () => {
     screen.getByRole('button', { name: /Send message/i }).click()
     
     await waitFor(() => {
-      expect(screen.getByText(/Sent successfully/i)).toBeInTheDocument()
+      expect(screen.getByRole('status')).toHaveTextContent(/Sent successfully/i)
     })
     
     // Form should be cleared
@@ -199,7 +199,7 @@ describe('Contact Page', () => {
     screen.getByRole('button', { name: /Send message/i }).click()
     
     await waitFor(() => {
-      expect(screen.getByText(/Failed to send, please try again/i)).toBeInTheDocument()
+      expect(screen.getByRole('status')).toHaveTextContent(/Failed to send, please try again/i)
     })
   })
 })
