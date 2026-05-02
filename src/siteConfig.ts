@@ -7,6 +7,7 @@ import projWeb3 from './assets/proj_web_3.png'
 import projGame1 from './assets/proj_game_1.png'
 import projGame2 from './assets/proj_game_2.png'
 import projGame3 from './assets/proj_game_3.png'
+import personalPhoto from './assets/personal_photo.jpg'
 
 export type ProjectKind = 'mobile' | 'web' | 'game'
 
@@ -80,16 +81,16 @@ export const siteConfig = {
       { label: 'Focus', value: 'UI/UX + FE' },
       { label: 'Open to', value: 'Collaboration' },
     ],
-    images: ['/src/assets/personal_photo.jpg', '/src/assets/personal_photo.jpg', '/src/assets/personal_photo.jpg'] as string[],
+    images: [personalPhoto, personalPhoto, personalPhoto] as string[],
   },
   contact: {
     title: 'Say hello to me~',
-    toEmail: 'you@example.com',
+    toEmail: 'nq2019.buibaolong281104@gmail.com',
   },
   social: {
     facebook: 'https://www.facebook.com/long.bui.793956/',
     github: 'https://github.com/GDevNeON',
-    linkedin: 'https://linkedin.com/in/your-profile',
+    linkedin: 'https://www.linkedin.com/in/b%E1%BA%A3o-long-b%C3%B9i-806535407/',
   },
   ui: {
     home: {
@@ -112,7 +113,7 @@ export const siteConfig = {
       subtitle: 'Drop a message. The border highlight follows your focus.',
       yourEmail: 'Your email',
       message: 'Message',
-      emailPlaceholder: 'you@example.com',
+      emailPlaceholder: 'nq2019.buibaolong281104@gmail.com',
       messagePlaceholder: 'Tell me what you\'re building...',
       sendMessage: 'Send message',
       sending: 'Sending…',

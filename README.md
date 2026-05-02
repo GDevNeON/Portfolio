@@ -1,73 +1,76 @@
-# React + TypeScript + Vite
+# Neon Portfolio
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Personal developer portfolio website showcasing projects, tech stack, and contact information. Built with React, TypeScript, and Vite featuring a glassmorphism UI design.
 
-Currently, two official plugins are available:
+## Tech Stack
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- React 19 + TypeScript 5
+- Vite 7 (build tool)
+- React Router DOM 6 (routing)
+- Custom CSS (no framework)
+- EmailJS Browser (contact form)
 
-## React Compiler
+## Getting Started
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm install
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+Build for production:
+```bash
+npm run build
 ```
+
+## EmailJS Setup
+
+This project uses [EmailJS](https://www.emailjs.com/) to send contact form emails without a backend.
+
+### Required Environment Variables
+
+Create a `.env` file in the project root with these variables:
+
+```env
+VITE_EMAILJS_SERVICE_ID=your_service_id
+VITE_EMAILJS_TEMPLATE_ID=your_template_id
+VITE_EMAILJS_PUBLIC_KEY=your_public_key
+```
+
+See `.env.example` for the template format.
+
+### Getting Your Credentials
+
+1. Sign up at [EmailJS Dashboard](https://dashboard.emailjs.com/)
+2. Create an Email Service (Gmail, Outlook, etc.)
+3. Create an Email Template with these template variables:
+   - `{{from_email}}` — sender's email address
+   - `{{message}}` — the message content
+4. Copy the Service ID, Template ID, and Public Key to your `.env` file
+
+### Rate Limiting
+
+The contact form has built-in rate limiting (3 submissions per 10 minutes per browser) to prevent abuse.
+
+## Project Structure
+
+- `src/components/` — React components
+- `src/pages/` — Page components (Home, Contact)
+- `src/contexts/` — React contexts (Theme)
+- `src/styles/` — CSS stylesheets
+- `src/siteConfig.ts` — Site configuration (content, links, contact info)
+
+## Features
+
+- Hero section with CTA
+- Tech stack showcase
+- Project portfolio with filtering
+- About section with stats
+- Contact form with email integration
+- Theme toggle (light/dark)
+- Responsive design
+- Glassmorphism UI effects
+- Error Boundary for graceful error handling
+
+## License
+
+MIT
