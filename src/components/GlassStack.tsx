@@ -76,7 +76,7 @@ export default function GlassStack({ images, className, alt }: GlassStackProps) 
           className={`glassPaneV glassPaneV--${index}`}
           aria-label={alt ?? ''}
         >
-          {!loadedImages[index] && <div className="skeleton" style={{ width: '100%', height: '100%' }} />}
+          {!loadedImages[index] && <div className="skeleton" />}
           <img
             src={src}
             alt={alt ?? ''}

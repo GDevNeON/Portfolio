@@ -35,12 +35,17 @@
 
 .bgBorderPanel {
   position: fixed;
+  left: 0;
+  top: 0;
   width: 193vw;
   height: 175vh;
   border-radius: 90px;
   pointer-events: none;
   z-index: 0;
   opacity: 0.85;
+  transform: translate(var(--panel-start-x, 0), var(--panel-start-y, 0));
+  animation: panelTravel var(--panel-duration, 0ms) cubic-bezier(0.2, 0.75, 0.15, 1) forwards;
+  will-change: transform;
 }
 
 .bgBorderPanel--topLeft {
@@ -109,6 +114,15 @@
   }
   100% {
     --panel-spin: 360deg;
+  }
+}
+
+@keyframes panelTravel {
+  0% {
+    transform: translate(var(--panel-start-x), var(--panel-start-y));
+  }
+  100% {
+    transform: translate(var(--panel-end-x), var(--panel-end-y));
   }
 }
 

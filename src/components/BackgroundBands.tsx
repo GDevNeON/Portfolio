@@ -4,8 +4,10 @@ const PANEL_RUNNER_DURATION = 6400
 
 type PanelInfo = {
   id: number
-  x: string
-  y: string
+  sx: string
+  sy: string
+  ex: string
+  ey: string
 }
 
 function pick<T>(items: T[]) {
@@ -28,21 +30,18 @@ export default function BackgroundBands({
       if (!active) return
       const id = Date.now()
       const corner = pick(['tl', 'tr', 'bl', 'br'] as const)
-      let x = '-120vw'
-      let y = '-120vh'
+      
+      let sx = '-200vw', sy = '-180vh', ex = '100vw', ey = '100vh'
 
       if (corner === 'tr') {
-        x = '-70vw'
-        y = '-120vh'
+        sx = '100vw'; sy = '-180vh'; ex = '-200vw'; ey = '100vh'
       } else if (corner === 'bl') {
-        x = '-120vw'
-        y = '-70vh'
+        sx = '-200vw'; sy = '100vh'; ex = '100vw'; ey = '-180vh'
       } else if (corner === 'br') {
-        x = '-70vw'
-        y = '-70vh'
+        sx = '100vw'; sy = '100vh'; ex = '-200vw'; ey = '-180vh'
       }
 
-      setPanel({ id, x, y })
+      setPanel({ id, sx, sy, ex, ey })
 
       window.setTimeout(() => {
         if (!active) return
@@ -53,7 +52,7 @@ export default function BackgroundBands({
           if (!active) return
           loop()
         }, 400)
-      }, PANEL_RUNNER_DURATION + 80)
+      }, PANEL_RUNNER_DURATION)
     }
 
     loop()
@@ -72,8 +71,10 @@ export default function BackgroundBands({
           style={
             {
               ['--panel-duration' as never]: `${PANEL_RUNNER_DURATION}ms`,
-              ['--panel-x' as never]: panel.x,
-              ['--panel-y' as never]: panel.y,
+              ['--panel-start-x' as never]: panel.sx,
+              ['--panel-start-y' as never]: panel.sy,
+              ['--panel-end-x' as never]: panel.ex,
+              ['--panel-end-y' as never]: panel.ey,
             } as CSSProperties
           }
         />

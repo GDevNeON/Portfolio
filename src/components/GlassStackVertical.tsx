@@ -65,7 +65,7 @@ export default function GlassStackVertical({
           >
             {src ? (
               <>
-                {!loadedImages.has(paneIndex) && <div className="skeleton" style={{ width: '100%', height: '150px' }} />}
+                {!loadedImages.has(paneIndex) && <div className="skeleton" />}
                 <img
                   src={src}
                   alt={alt ?? ''}
